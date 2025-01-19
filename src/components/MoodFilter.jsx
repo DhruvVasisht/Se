@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button";
 import mood from "../assets/mood.js";
 
-const MoodFilter = () => {
+const MoodFilter = ({selectedGenre, toggleGenre }) => {
   return (
     <>
       <h1 className="my-8 mood-center-container grid lg:text-5xl text-4xl font-bold">
@@ -10,8 +10,8 @@ const MoodFilter = () => {
       </h1>
       <p>How Are You Feeling Right Now? 👀</p>
       <div className="my-10 grid lg:grid-cols-4 grid-cols-3 lg:gap-6 gap-4 mood-center-container">
-        {Object.entries(mood).map(([mood, genre]) => (
-          <Button key={genre} text={mood} />
+        {Object.entries(mood).map(([mood, genre],index) => (
+          <Button key={index} text={mood} onclick={()=>toggleGenre(mood, genre)} />
         ))}
       </div>
     </>

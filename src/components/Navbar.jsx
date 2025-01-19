@@ -1,12 +1,25 @@
-const Navbar = () => {
+const Navbar = ({ onBackClick, selectedMood }) => {
   return (
     <>
       <div className="navbar center-container bg-slate-100/5 py-2 my-4 rounded-[15px] shadow-xl">
         <div className="navbar-start">
-          <button className="text-2xl btn btn-ghost btn-circle">⛩️</button>
+          <button
+            onClick={onBackClick}
+            className="text-2xl btn btn-ghost btn-circle"
+          >
+            ⛩️
+          </button>
         </div>
         <div className="navbar-center">
-          <a className="btn btn-ghost text-3xl">Senpai's Choice</a>
+          <div className="navbar">
+            <h1>
+              {selectedMood ? (
+                `Mood: ${selectedMood}`
+              ) : (
+                <a className="btn btn-ghost text-3xl">Senpai's Choice</a>
+              )}
+            </h1>
+          </div>
         </div>
         <div className="navbar-end">
           <button className="btn btn-ghost btn-circle">
