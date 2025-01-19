@@ -12,7 +12,7 @@ function App() {
     <ContentList/>
     <MoodFilter/>
     <Footer/>
-    <ContentContainer/>
+    {/* <ContentContainer/> */}
     </>
   )
 }
