@@ -8,7 +8,7 @@ export default function NavBar({ onBackClick, selectedMood}) {
                 </button>
             </div>
             <div className="navbar-center">
-                <a className="btn btnpn-ghost text-3xl">
+                <a className="btn btn-ghost text-3xl">
 
                 <h1>{selectedMood ? selectedMood : "Senpai's Choice"}</h1>
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import MoodFilter from "./MoodFilter";
 import ContentList from "./ContentList";
-import NavBar from "./NavBar";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 
