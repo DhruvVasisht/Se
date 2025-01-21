@@ -1,51 +1,85 @@
 import Button from "./Button";
 
-const ContentList = () => {
-  return (
-    <div>
-      <div className="card mt-2 bg-slate-100/5 center-container card-compact bg-base-100 w-96 shadow-xl">
-        <figure className="aspect-[16/9]">
-          <iframe
-            className="w-full h-full"
-            width="1044"
-            height="587"
-            src="https://www.youtube.com/embed/OcUy1pki-Og"
-            title="Captain America: Brave New World | It&#39;s Time"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-        </figure>
-        <div className="card-body text-left">
-          <h2 className="card-title font-bold cursor-pointer">Anime Title</h2>
-          <p className="text-lg font-thin">2014 · 25 ep · ⭐8.44 · 🏆top 37</p>
-          <div className="flex gap-3">
-            <div className="badge badge-secondary font-semibold badge-outline rounded-md">
-              secondary
-            </div>
-            <div className="badge badge-secondary font-bold badge-outline rounded-md">
-              secondary
-            </div>
-            <div className="badge badge-secondary font-bold badge-outline rounded-md">
-              secondary
-            </div>
-          </div>
-          <p className="mt-3 font-thin">
-            Description Lorem, ipsum dolor sit amet consectetur adipisicing
-            elit. Eveniet labore iste ad, sunt earum amet fugit quae suscipit
-            laudantium veritatis.
-          </p>
+export default function ContentList({animeList, loading, error, page,  handleHideClick, hiddenAnime, handleNextPage , handlePrevPage}) {
+    const filteredAnimeList = animeList.filter((anime) => !hiddenAnime.has(anime.mal_id));
+    
+    const handleCopyTitle = (title) => {
+        navigator.clipboard.writeText(title)
+          .then(() => {
+            alert(`${title} copied to clipboard!`);
+          })
+          .catch((err) => {
+            console.error("Failed to copy title: ", err);
+          });
+      };
+    
 
-          <div className="mt-1 flex justify-between">
-            <Button text={"⬅️ BACK"} />
-            <Button text={"🙈 HIDE"} />
-            <Button text={"NEXT ➡️"} />
-          </div>
+    return (
+        <>
+    <div className="card bg-slate-100/5 mt-3 center-container card-compact bg-base-100 w-96 shadow-xl">
+
+    {filteredAnimeList.length === 0 ? (
+        <div className="p-5">
+            <p>This Anime is Hidden</p>
+            <div className="flex justify-between">
+                <Button onClick={handlePrevPage} text={"⬅️ Back"}/>
+                <Button  onClick={handleNextPage} text={"Next ➡️"}/>
+            </div>
         </div>
-      </div>
-    </div>
-  );
-};
 
-export default ContentList;
+    ): (
+        filteredAnimeList.map((anime) => (
+
+        <>
+            <div key={anime.mal_id}>
+            <figure className=" aspect-[16/9]">
+                {anime.trailer?.embed_url ? (
+                    <iframe className="w-full h-full" width="1044" height="587" 
+                    src={anime.trailer.embed_url} 
+                    title={`${anime.title} Trailer`}
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>  
+                    </iframe>
+                ): (
+                    <p>Trailer does not exist</p>
+                )}
+                
+                
+            </figure>
+            <div className="card-body text-left">
+                <h2 className="card-title font-bold cursor-pointer">{anime.title}</h2>
+                <p className="text-lg font-thin">
+                    {anime.aired?.from ?  new Date(anime.aired.from).getFullYear() : 'N/A'}
+                    &nbsp; · &nbsp;  {anime.episodes ?? 'N/A'} ep   
+                    &nbsp; · ⭐{anime.score} 
+                    &nbsp;· 🏆top {anime.popularity}
+                </p>
+                <div className="flex space-x-2">
+                    {anime.genres?.map((genre, index) => (
+                        <div key={index} className="badge badge-secondary badge-outline">
+                            {genre.name}
+                        </div>
+                    )) || <div className="badge badge-secondary badge-outline">N/A</div>}
+
+                </div>
+                <p className="mt-3 font-thin">{anime.synopsis.split('.')[0] + '.'}</p>
+                
+                <div className="flex justify-between mt-3">
+                    <Button onClick={handlePrevPage} text={"⬅️ Back"}/>
+                    <Button onClick={() => handleHideClick(anime.mal_id)} text={"🙈 Hide"}/>
+                    <Button onClick={handleNextPage} text={"Next ➡️"}/>
+                </div>
+            </div>
+            </div>
+
+
+        </>
+    )
+))}
+
+
+        
+        </div>
+
+        </>
+    )
+}
