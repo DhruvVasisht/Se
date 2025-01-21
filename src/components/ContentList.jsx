@@ -51,11 +51,11 @@ export default function ContentList({animeList, loading, error, page,  handleHid
                     {anime.aired?.from ?  new Date(anime.aired.from).getFullYear() : 'N/A'}
                     &nbsp; · &nbsp;  {anime.episodes ?? 'N/A'} ep   
                     &nbsp; · ⭐{anime.score} 
-                    &nbsp;· 🏆top {anime.popularity}
+                    &nbsp;· 🏆Top {anime.popularity}
                 </p>
                 <div className="flex space-x-2">
                     {anime.genres?.map((genre, index) => (
-                        <div key={index} className="badge badge-secondary badge-outline">
+                        <div key={index} className="badge badge-secondary badge-outline rounded">
                             {genre.name}
                         </div>
                     )) || <div className="badge badge-secondary badge-outline">N/A</div>}
