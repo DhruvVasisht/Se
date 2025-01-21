@@ -95,7 +95,7 @@ export default function ContentContainer() {
     return (
         <>
 
-        <NavBar  onBackClick={handleBackButtonClick} selectedMood={selectedMood}/>
+        <Navbar  onBackClick={handleBackButtonClick} selectedMood={selectedMood}/>
 
         {!showAnimeContent && <MoodFilter selectedGenre={selectedGenres} toggleGenre={toggleGenre}/>}
         
